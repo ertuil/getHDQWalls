@@ -32,6 +32,10 @@ def downloadPic(name, route):
     name = save_path + name + ".jpg"
     print("Downloading {}".format(url),end='\t')
 
+    if(os.path.exists(name)):
+        print("Pass.")
+        return
+     
     try:
         image_data = requests.get(url, headers=headers).content
         with open(name, "wb+") as f:

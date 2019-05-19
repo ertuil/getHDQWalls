@@ -7,8 +7,10 @@ from bs4 import BeautifulSoup
 # Basic Configurations and these options can be decided by yourself
 save_path = "imgs/" # Where to save these images?
 resolution = "3840x2160" # It could be '3840*2160', '1920*1080', '1024*768' etc.
-catagory = "nature" # It could be 'nature', 'games', 'superheroes', 'girls', 'movies', 'cars', 'artist' etc.
+catagory = "flowers" # It could be 'nature', 'games', 'superheroes', 'girls', 'movies', 'cars', 'artist' etc.
+start_page = 1 # Start Page Default is 1
 sleep = 2
+
 
 basic_url = "https://hdqwalls.com"
 headers = {
@@ -73,19 +75,23 @@ def getMaxPages():
     if len(a) <= 0:
         print("Error: Cannot find max page.")
         exit(1)
-    maxPage = re.search(r"\d*$" , a[0].string, flags=0)
+    global maxPage 
+    maxPage = int(re.search(r"\d*$" , a[0].string, flags=0).group())
 
 # Main Function
 def main():
     makeDestDir()
     getMaxPages()
-    page = 1
+    print("The number of total pages is {}".format(maxPage))
+    page = start_page
     while page <= maxPage:
+        print("Start Page is {}".format(page))
         getPicList(page)
         while len(urlQueue) > 0:
             getPicUrl()
             time.sleep(sleep)
         page += 1
+    print("Finished.")
     
 if __name__ == "__main__":
     main()

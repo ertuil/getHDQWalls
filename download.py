@@ -81,6 +81,7 @@ def main():
         while len(urlQueue) > 0:
             getPicUrl()
             time.sleep(sleep)
+        page += 1
     
 if __name__ == "__main__":
     main()
